@@ -697,6 +697,7 @@ require('lazy').setup({
         'html',
         'cssls',
         'jsonls',
+        'tailwindcss',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -707,6 +708,7 @@ require('lazy').setup({
           'html',
           'cssls',
           'jsonls',
+          'tailwindcss',
         },
         handlers = {
           function(server_name)

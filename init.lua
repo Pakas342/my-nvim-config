@@ -432,6 +432,76 @@ require('lazy').setup({
         --   },
         -- },
         -- pickers = {}
+        -- NOTE: this big default thing is created by me to handle remix files, because they used to not open when it's name was composed of complex symbols
+        defaults = {
+          mappings = {
+            i = {
+              ['<CR>'] = function(prompt_bufnr)
+                -- Get the selected entry
+                local actions = require 'telescope.actions'
+                local action_state = require 'telescope.actions.state'
+                local selection = action_state.get_selected_entry()
+
+                if not selection then
+                  return
+                end
+
+                -- Close the telescope window first
+                actions.close(prompt_bufnr)
+
+                -- Get the file path
+                local file_path = selection.value or selection.path or selection[1]
+
+                if file_path then
+                  -- For paths with parentheses, convert backslashes to forward slashes
+                  if file_path:match '%(' or file_path:match '%)' then
+                    -- Convert all backslashes to forward slashes
+                    local fixed_path = file_path:gsub('\\', '/')
+
+                    -- Open the file with the fixed path
+                    vim.cmd('edit ' .. fixed_path)
+                  else
+                    -- For regular files, use the standard method
+                    vim.cmd('edit ' .. vim.fn.fnameescape(file_path))
+                  end
+                end
+              end,
+            },
+            n = {
+              ['<CR>'] = function(prompt_bufnr)
+                -- Same function as above for normal mode
+                local actions = require 'telescope.actions'
+                local action_state = require 'telescope.actions.state'
+                local selection = action_state.get_selected_entry()
+
+                if not selection then
+                  return
+                end
+
+                -- Close the telescope window first
+                actions.close(prompt_bufnr)
+
+                -- Get the file path
+                local file_path = selection.value or selection.path or selection[1]
+
+                if file_path then
+                  -- For paths with parentheses, convert backslashes to forward slashes
+                  if file_path:match '%(' or file_path:match '%)' then
+                    -- Convert all backslashes to forward slashes
+                    local fixed_path = file_path:gsub('\\', '/')
+
+                    -- Open the file with the fixed path
+                    vim.cmd('edit ' .. fixed_path)
+                  else
+                    -- For regular files, use the standard method
+                    vim.cmd('edit ' .. vim.fn.fnameescape(file_path))
+                  end
+                end
+              end,
+            },
+          },
+          -- Keep your other telescope default settings
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),

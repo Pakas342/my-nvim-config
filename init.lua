@@ -292,7 +292,12 @@ require('lazy').setup({
   {
     'pmizio/typescript-tools.nvim',
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-    opts = {},
+    opts = {
+      jsx_close_tag = {
+        enable = true,
+        filetypes = { 'javascriptreact', 'typescriptreact' },
+      },
+    },
   },
   -- See `:help gitsigns` to understand what the configuration keys do
   { -- Adds git related signs to the gutter, as well as utilities for managing changes

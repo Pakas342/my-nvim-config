@@ -442,7 +442,6 @@ require('lazy').setup({
           mappings = {
             i = {
               ['<CR>'] = function(prompt_bufnr)
-                -- Get the selected entry
                 local actions = require 'telescope.actions'
                 local action_state = require 'telescope.actions.state'
                 local selection = action_state.get_selected_entry()
@@ -451,30 +450,36 @@ require('lazy').setup({
                   return
                 end
 
-                -- Close the telescope window first
-                actions.close(prompt_bufnr)
+                -- Handle grep results (have filename, lnum, col fields)
+                if selection.filename and selection.lnum then
+                  actions.close(prompt_bufnr)
+                  vim.cmd('edit ' .. vim.fn.fnameescape(selection.filename))
+                  vim.api.nvim_win_set_cursor(0, { selection.lnum, selection.col - 1 })
+                  return
+                end
 
-                -- Get the file path
-                local file_path = selection.value or selection.path or selection[1]
-
+                -- Handle file picker results
+                local file_path = selection.path or selection.value or selection[1]
                 if file_path then
-                  -- For paths with parentheses, convert backslashes to forward slashes
-                  if file_path:match '%(' or file_path:match '%)' then
-                    -- Convert all backslashes to forward slashes
-                    local fixed_path = file_path:gsub('\\', '/')
+                  actions.close(prompt_bufnr)
 
-                    -- Open the file with the fixed path
-                    vim.cmd('edit ' .. fixed_path)
+                  -- Only apply special handling for files with parentheses
+                  if file_path:match '%(' or file_path:match '%)' then
+                    local fixed_path = file_path:gsub('\\', '/')
+                    vim.cmd('edit ' .. vim.fn.fnameescape(fixed_path))
                   else
-                    -- For regular files, use the standard method
-                    vim.cmd('edit ' .. vim.fn.fnameescape(file_path))
+                    -- Use default action for normal files
+                    require('telescope.actions').select_default(prompt_bufnr)
+                    return
                   end
+                else
+                  -- Fallback to default action
+                  require('telescope.actions').select_default(prompt_bufnr)
                 end
               end,
             },
             n = {
               ['<CR>'] = function(prompt_bufnr)
-                -- Same function as above for normal mode
                 local actions = require 'telescope.actions'
                 local action_state = require 'telescope.actions.state'
                 local selection = action_state.get_selected_entry()
@@ -483,29 +488,35 @@ require('lazy').setup({
                   return
                 end
 
-                -- Close the telescope window first
-                actions.close(prompt_bufnr)
+                -- Handle grep results (have filename, lnum, col fields)
+                if selection.filename and selection.lnum then
+                  actions.close(prompt_bufnr)
+                  vim.cmd('edit ' .. vim.fn.fnameescape(selection.filename))
+                  vim.api.nvim_win_set_cursor(0, { selection.lnum, selection.col - 1 })
+                  return
+                end
 
-                -- Get the file path
-                local file_path = selection.value or selection.path or selection[1]
-
+                -- Handle file picker results
+                local file_path = selection.path or selection.value or selection[1]
                 if file_path then
-                  -- For paths with parentheses, convert backslashes to forward slashes
-                  if file_path:match '%(' or file_path:match '%)' then
-                    -- Convert all backslashes to forward slashes
-                    local fixed_path = file_path:gsub('\\', '/')
+                  actions.close(prompt_bufnr)
 
-                    -- Open the file with the fixed path
-                    vim.cmd('edit ' .. fixed_path)
+                  -- Only apply special handling for files with parentheses
+                  if file_path:match '%(' or file_path:match '%)' then
+                    local fixed_path = file_path:gsub('\\', '/')
+                    vim.cmd('edit ' .. vim.fn.fnameescape(fixed_path))
                   else
-                    -- For regular files, use the standard method
-                    vim.cmd('edit ' .. vim.fn.fnameescape(file_path))
+                    -- Use default action for normal files
+                    require('telescope.actions').select_default(prompt_bufnr)
+                    return
                   end
+                else
+                  -- Fallback to default action
+                  require('telescope.actions').select_default(prompt_bufnr)
                 end
               end,
             },
           },
-          -- Keep your other telescope default settings
         },
         extensions = {
           ['ui-select'] = {

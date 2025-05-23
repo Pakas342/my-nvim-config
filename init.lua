@@ -84,6 +84,10 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+-- NOTE: THIS IS DONE BECAUSE FUCKING REMIX
+vim.opt.isfname:append '@-@' -- Allow @ in filenames
+vim.opt.isfname:append '(,)' -- Allow parentheses in filenames
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -195,7 +199,9 @@ vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 vim.keymap.set('n', '<PageUp>', '<cmd>echo "Te salvaaaaste"<CR>')
+vim.keymap.set('i', '<PageUp>', '<cmd>echo "Te salvaaaaste"<CR>')
 vim.keymap.set('n', '<PageDown>', '<cmd>echo "Te salvaaaaste"<CR>')
+vim.keymap.set('i', '<PageDown>', '<cmd>echo "Te salvaaaaste"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -205,6 +211,11 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- Keybind to navigate a quicklist with the leader key
+-- -- Better versions with error handling
+vim.keymap.set('n', '<leader>n', '<cmd>try | cnext | catch | cfirst | endtry<CR>', { desc = 'Next quickfix item' })
+vim.keymap.set('n', '<leader>p', '<cmd>try | cprev | catch | clast | endtry<CR>', { desc = 'Prev quickfix item' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -431,78 +442,12 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        --defaults = {
-        --  mappings = {
-        --    i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --  },
-        --},
-        pickers = {},
-        --NOTE: this big default thing is created by me to handle remix files, because they used to not open when it's name was composed of complex symbols
         defaults = {
           mappings = {
-            i = {
-              ['<CR>'] = function(prompt_bufnr)
-                -- Get the selected entry
-                local actions = require 'telescope.actions'
-                local action_state = require 'telescope.actions.state'
-                local selection = action_state.get_selected_entry()
-
-                if not selection then
-                  return
-                end
-
-                -- Close the telescope window first
-                actions.close(prompt_bufnr)
-
-                -- Get the file path
-                local file_path = selection.value or selection.path or selection[1]
-
-                if file_path then
-                  local filename = file_path:match '^([^:]+)' or file_path
-                  if filename:match '%(' or filename:match '%)' then
-                    local fixed_path = filename:gsub('\\', '/')
-                    vim.cmd('edit ' .. fixed_path)
-                  else
-                    vim.cmd('edit ' .. vim.fn.fnameescape(filename))
-                  end
-
-                  local line, col = file_path:match ':(%d+):(%d+)'
-                  if line then
-                    vim.api.nvim_win_set_cursor(0, { tonumber(line), (tonumber(col) or 1) - 1 })
-                  end
-                end
-              end,
-            },
-            n = {
-              ['<CR>'] = function(prompt_bufnr)
-                local actions = require 'telescope.actions'
-                local action_state = require 'telescope.actions.state'
-                local selection = action_state.get_selected_entry()
-
-                if not selection then
-                  return
-                end
-
-                actions.close(prompt_bufnr)
-
-                local file_path = selection.value or selection.path or selection[1]
-                if file_path then
-                  local filename = file_path:match '^([^:]+)' or file_path
-                  if filename:match '%(' or filename:match '%)' then
-                    local fixed_path = filename:gsub('\\', '/')
-                    vim.cmd('edit ' .. fixed_path)
-                  else
-                    vim.cmd('edit ' .. vim.fn.fnameescape(filename))
-                  end
-                  local line, col = file_path:match ':(%d+):(%d+)'
-                  if line then
-                    vim.api.nvim_win_set_cursor(0, { tonumber(line), (tonumber(col) or 1) - 1 })
-                  end
-                end
-              end,
-            },
+            i = { ['<c-enter>'] = 'to_fuzzy_refine' },
           },
         },
+        pickers = {},
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),

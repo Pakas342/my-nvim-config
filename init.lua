@@ -213,9 +213,8 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Keybind to navigate a quicklist with the leader key
--- -- Better versions with error handling
-vim.keymap.set('n', '<leader>n', '<cmd>try | cnext | catch | cfirst | endtry<CR>', { desc = 'Next quickfix item' })
-vim.keymap.set('n', '<leader>p', '<cmd>try | cprev | catch | clast | endtry<CR>', { desc = 'Prev quickfix item' })
+vim.keymap.set('n', '<leader>n', '<cmd>cnext<CR>', { desc = 'Next quickfix item' })
+vim.keymap.set('n', '<leader>p', '<cmd>cprev<CR>', { desc = 'Prev quickfix item' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`

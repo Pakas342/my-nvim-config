@@ -1076,6 +1076,7 @@ require('lazy').setup({
         max_completion_tokens = 16000, -- Increase this to include reasoning tokens (for reasoning models)
         --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
       },
+      mode = 'legacy',
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false', -- for windows

@@ -1,4 +1,6 @@
-# kickstart.nvim
+# This is my personal nvim config, based on the amazing work of the all contributors of Kickstart.nvim. Thanks for this beautifful gift
+
+## kickstart.nvim
 
 ## Introduction
 

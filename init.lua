@@ -20,27 +20,6 @@
 =====================================================================
 =====================================================================
 
-What is Kickstart?
-
-  Kickstart.nvim is *not* a distribution.
-
-  Kickstart.nvim is a starting point for your own configuration.
-    The goal is that you can read every line of code, top-to-bottom, understan
-    what your configuration is doing, and modify it to suit your needs.
-
-    Once you've done that, you can start exploring, configuring and tinkering to
-    make Neovim your own! That might mean leaving Kickstart just the way it is for a while
-    or immediately breaking it into modular pieces. It's up to you!
-
-    If you don't know anything about Lua, I recommend taking some time to read through
-    a guide. One possible example which will only take 10-15 minutes:
-      - https://learnxinyminutes.com/docs/lua/
-
-    After understanding a bit more about Lua, you can use `:help lua-guide` as a
-    reference for how Neovim integrates Lua.
-    - :help lua-guide
-    - (or HTML version): https://neovim.io/doc/user/lua-guide.html
-
 Kickstart Guide:
 
   TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
@@ -84,7 +63,7 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
--- NOTE: THIS IS DONE BECAUSE FUCKING REMIX
+-- NOTE: THIS IS DONE BECAUSE FUCKING REMIXJS
 vim.opt.isfname:append '@-@' -- Allow @ in filenames
 vim.opt.isfname:append '(,)' -- Allow parentheses in filenames
 
@@ -380,6 +359,7 @@ require('lazy').setup({
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { '<leader>a', group = '[A]vante', mode = { 'n', 'v' } },
       },
     },
   },
@@ -909,44 +889,73 @@ require('lazy').setup({
     end,
   },
 
-  -- colorscheme config
+  -- colorschemes config
+  -- example of colorschme config
+  { -- You can easily change to a different colorscheme.
+    -- Change the name of the colorscheme plugin below, and then
+    -- change the command in the config to whatever the name of that colorscheme is.
+    --
+    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+    'folke/tokyonight.nvim',
+    priority = 1000, -- Make sure to load this before all the other start plugins.
+    -- init = function()
+    -- Load the colorscheme here.
+    -- Like many other themes, this one has different styles, and you could load
+    -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+    --  vim.cmd.colorscheme 'tokyonight-night'
+
+    --  -- You can configure highlights by doing something like:
+    --  vim.cmd.hi 'Comment gui=none'
+    -- end,
+  },
   {
     'ellisonleao/gruvbox.nvim',
     priority = 1000,
-    init = function()
-      vim.o.background = 'dark'
-      vim.cmd.colorscheme 'gruvbox'
-    end,
   },
   {
-    'catppuccin/nvim',
-    name = 'catppuccin',
+    'Shatur/neovim-ayu',
     priority = 1000,
-    -- init = function()
-    --   require('catppuccin').setup {
-    --     flavour = 'mocha', -- Can be: latte, frappe, macchiato, mocha
-    --   }
-    --   vim.cmd.colorscheme 'catppuccin'
-    -- end,
   },
-  -- example of colorschme config
-  -- { -- You can easily change to a different colorscheme.
-  --   -- Change the name of the colorscheme plugin below, and then
-  --   -- change the command in the config to whatever the name of that colorscheme is.
-  --   --
-  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  --   'folke/tokyonight.nvim',
-  --   priority = 1000, -- Make sure to load this before all the other start plugins.
-  --   init = function()
-  --     -- Load the colorscheme here.
-  --     -- Like many other themes, this one has different styles, and you could load
-  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  --     vim.cmd.colorscheme 'tokyonight-night'
-
-  --     -- You can configure highlights by doing something like:
-  --     vim.cmd.hi 'Comment gui=none'
-  --   end,
-  -- },
+  {
+    'marko-cerovac/material.nvim',
+    priority = 1000,
+  },
+  -- Lovely plugin to easily change colorschemes in nvim
+  {
+    'zaldih/themery.nvim',
+    lazy = false,
+    config = function()
+      require('themery').setup {
+        themes = {
+          {
+            name = 'Gruvbox Dark',
+            colorscheme = 'gruvbox',
+            before = [[
+            require('gruvbox').setup({ contrast = 'hard' })
+          ]],
+          },
+          {
+            name = 'Tokyo Night',
+            colorscheme = 'tokyonight',
+            before = [[
+            require('tokyonight').setup({ style = 'night' })
+          ]],
+          },
+          {
+            name = 'Ayu Dark',
+            colorscheme = 'ayu-dark',
+          },
+          {
+            name = 'Material Deep Ocean',
+            colorscheme = 'material',
+            before = [[
+            vim.g.material_style = 'deep ocean'
+          ]],
+          },
+        },
+      }
+    end,
+  },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },

@@ -1,4 +1,4 @@
-# This is my personal nvim config, based on the amazing work of the all contributors of Kickstart.nvim. Thanks for this beautifful gift
+# This is my personal nvim config, built on the amazing work by Kickstart.nvim contributors. Thanks for this beautiful gift!
 
 ## kickstart.nvim
 

@@ -195,6 +195,10 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<leader>n', '<cmd>cnext<CR>', { desc = 'Next quickfix item' })
 vim.keymap.set('n', '<leader>p', '<cmd>cprev<CR>', { desc = 'Prev quickfix item' })
 
+-- Keybinds to reposition the cursor after ctrl d or ctrl u
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Jump half of the window down, and center cursor' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Jump half of the window up, and center cursor' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 

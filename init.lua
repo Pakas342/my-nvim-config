@@ -199,6 +199,9 @@ vim.keymap.set('n', '<leader>p', '<cmd>cprev<CR>', { desc = 'Prev quickfix item'
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Jump half of the window down, and center cursor' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Jump half of the window up, and center cursor' })
 
+-- Keybind for nvim oil openning
+vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -478,6 +481,101 @@ require('lazy').setup({
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
     end,
+  },
+
+  -- Oil plugin for file navigation
+  {
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { 'echasnovski/mini.icons', opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    lazy = false,
+  },
+  -- NOTE: GIt plugins for css/tailwind
+
+  -- Tailwind CSS Colorizer - Shows colors inline for Tailwind classes
+  {
+    'roobert/tailwindcss-colorizer-cmp.nvim',
+    config = function()
+      require('tailwindcss-colorizer-cmp').setup {
+        color_square_width = 2,
+      }
+    end,
+  },
+
+  -- CSS Colorizer - Shows actual colors for hex, rgb, etc.
+  {
+    'norcalli/nvim-colorizer.lua',
+    config = function()
+      require('colorizer').setup({
+        'css',
+        'javascript',
+        'typescript',
+        'javascriptreact',
+        'typescriptreact',
+        'html',
+        'vue',
+        'svelte',
+      }, {
+        RGB = true, -- #RGB hex codes
+        RRGGBB = true, -- #RRGGBB hex codes
+        names = true, -- "Name" codes like Blue
+        RRGGBBAA = true, -- #RRGGBBAA hex codes
+        rgb_fn = true, -- CSS rgb() and rgba() functions
+        hsl_fn = true, -- CSS hsl() and hsla() functions
+        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+      })
+    end,
+  },
+
+  --  Better Tailwind IntelliSense with sorting and formatting
+  {
+    'luckasRanarison/tailwind-tools.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    opts = {
+      document_color = {
+        enabled = true, -- can be toggled by commands
+        kind = 'inline', -- "inline" | "foreground" | "background"
+        inline_symbol = '󰝤 ', -- only used in inline mode
+        debounce = 200, -- in milliseconds, only applied in insert mode
+      },
+      conceal = {
+        enabled = false, -- can be toggled by commands
+        min_length = nil, -- only conceal classes exceeding the provided length
+        symbol = '󱏿', -- only a single character is allowed
+        highlight = { -- extmark highlight options, see :h 'extmark'
+          fg = '#38BDF8',
+        },
+      },
+      custom_filetypes = {}, -- see the extension section to learn how it works
+    },
+  },
+
+  -- Auto-close and rename HTML/JSX tags
+  {
+    'windwp/nvim-ts-autotag',
+    dependencies = 'nvim-treesitter/nvim-treesitter',
+    config = function()
+      require('nvim-ts-autotag').setup {
+        opts = {
+          -- Defaults
+          enable_close = true, -- Auto close tags
+          enable_rename = true, -- Auto rename pairs of tags
+          enable_close_on_slash = false, -- Auto close on trailing </
+        },
+        -- Also override individual filetype configs
+        per_filetype = {
+          ['html'] = {
+            enable_close = false,
+          },
+        },
+      }
+    end,
+    ft = { 'html', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'vue', 'xml' },
   },
 
   -- LSP Plugins

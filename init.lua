@@ -66,6 +66,7 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- NOTE: THIS IS DONE BECAUSE FUCKING REMIXJS
 vim.opt.isfname:append '@-@' -- Allow @ in filenames
 vim.opt.isfname:append '(,)' -- Allow parentheses in filenames
+vim.opt.termguicolors = true
 
 -- Set <space> as the leader key
 -- See `:help mapleader`

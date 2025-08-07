@@ -1,5 +1,31 @@
 -- Quality of Life plugins
 return {
+
+  -- Minimap for easier file navigation
+  {
+    'echasnovski/mini.map',
+    version = false,
+    event = 'VeryLazy',
+    config = function()
+      local map = require 'mini.map'
+      require('mini.map').setup {
+        integrations = {
+          map.gen_integration.builtin_search(),
+          map.gen_integration.diagnostic(),
+          map.gen_integration.gitsigns(),
+        },
+      }
+
+      -- Set up keymaps
+      vim.keymap.set('n', '<Leader>mc', MiniMap.close, { desc = 'Close MiniMap' })
+      vim.keymap.set('n', '<Leader>mf', MiniMap.toggle_focus, { desc = 'Toggle MiniMap Focus' })
+      vim.keymap.set('n', '<Leader>mo', MiniMap.open, { desc = 'Open MiniMap' })
+      vim.keymap.set('n', '<Leader>mr', MiniMap.refresh, { desc = 'Refresh MiniMap' })
+      vim.keymap.set('n', '<Leader>ms', MiniMap.toggle_side, { desc = 'Toggle MiniMap Side' })
+      vim.keymap.set('n', '<Leader>mt', MiniMap.toggle, { desc = 'Toggle MiniMap' })
+    end,
+  },
+
   -- Oil plugin for file navigation
   {
     'stevearc/oil.nvim',

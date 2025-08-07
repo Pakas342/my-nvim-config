@@ -4,6 +4,9 @@
 -- Toggle format on save keymap
 vim.keymap.set('n', '<leader>tf', ':ToggleFormatOnSave<CR>', { desc = '[T]oggle [F]ormat on save' })
 
+-- Toggle copilot keymap
+vim.keymap.set('n', '<leader>tc', ':ToggleCopilot<CR>', { desc = '[T]oggle [C]opilot' })
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -51,3 +54,4 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Jump half of the window up, an
 
 -- Keybind for nvim oil openning
 vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+

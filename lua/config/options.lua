@@ -20,6 +20,18 @@ vim.api.nvim_create_user_command('ToggleFormatOnSave', function()
   print('Format on save: ' .. (vim.g.format_on_save_enabled and 'enabled' or 'disabled'))
 end, {})
 
+-- NOTE: this is done for the toggle copilot
+vim.g.copilot_enable = true
+vim.api.nvim_create_user_command('ToggleCopilot', function()
+  vim.g.copilot_enable = not vim.g.copilot_enable
+  if vim.g.copilot_enable then
+    vim.cmd 'Copilot enable'
+  else
+    vim.cmd 'Copilot disable'
+  end
+  print('Copilot autocompletion: ' .. (vim.g.copilot_enable and 'enabled' or 'disabled'))
+end, {})
+
 vim.opt.fileformat = 'unix'
 vim.opt.fileformats = 'unix,dos,mac'
 

@@ -44,3 +44,14 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.bo.expandtab = true
   end,
 })
+
+-- C/C++ (4 spaces)
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'c', 'cpp', 'h', 'hpp' },
+  callback = function()
+    vim.bo.shiftwidth = 4
+    vim.bo.tabstop = 4
+    vim.bo.softtabstop = 4
+    vim.bo.expandtab = true
+  end,
+})

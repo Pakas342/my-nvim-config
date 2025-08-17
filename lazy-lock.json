@@ -25,7 +25,6 @@
   "mini.map": { "branch": "main", "commit": "94ce1694e7b7a3940fc507ab25f061deb9c8179c" },
   "mini.nvim": { "branch": "main", "commit": "690a3b4c78c4956f7ecf770124b522d32084b872" },
   "mini.pick": { "branch": "main", "commit": "fc0d862a044af97f7850535fc8799ab38a223fe6" },
-  "neo-tree.nvim": { "branch": "main", "commit": "a77af2e764c5ed4038d27d1c463fa49cd4794e07" },
   "neovim-ayu": { "branch": "master", "commit": "f5da37a8ddd62fc3a7b28900c4d1b807a3582584" },
   "nui.nvim": { "branch": "main", "commit": "b58e2bfda5cea347c9d58b7f11cf3012c7b3953f" },
   "nvim-autopairs": { "branch": "master", "commit": "b464658e9b880f463b9f7e6ccddd93fb0013f559" },

@@ -186,6 +186,7 @@ return {
         cssls = {},
         jsonls = {},
         tailwindcss = {},
+        astro = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -254,7 +255,7 @@ return {
     opts = {
       jsx_close_tag = {
         enable = true,
-        filetypes = { 'javascriptreact', 'typescriptreact' },
+        filetypes = { 'javascriptreact', 'typescriptreact', 'astro' },
       },
     },
   },

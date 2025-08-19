@@ -63,4 +63,5 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
+  git = { timeout = 600 }, -- Increase git timeout for large repositories
 })

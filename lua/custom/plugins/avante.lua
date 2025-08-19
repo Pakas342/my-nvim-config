@@ -14,53 +14,125 @@ return {
   ---@module 'avante'
   ---@type avante.Config
   opts = {
-    -- REQUIRED: Configure a provider (can only have ONE provider active)
-    provider = 'claude', -- PICK ONE: 'claude' OR 'openai' (not both!)
-
-    -- NEW FORMAT: All providers go under 'providers' field
     providers = {
-      -- Claude Sonnet 4 configuration (UPDATED TO NEW FORMAT!)
       claude = {
-        endpoint = 'https://api.anthropic.com/v1',
-        model = 'claude-sonnet-4-20250514', -- Claude Sonnet 4 - superior to 3.7!
-        timeout = 30000,
-        -- Note: Claude Sonnet 4 supports up to 1M context tokens (5x more than 3.7!)
-        -- API key will be prompted or set via environment variable ANTHROPIC_API_KEY
-        extra_request_body = {
-          -- All request body parameters go here now
-          temperature = 0,
-          max_tokens = 20480,
-        },
+        model = 'claude-sonnet-4-20250514',
       },
-
-      -- Alternative: OpenAI configuration (COMMENTED OUT since you can only use one)
-      -- To use OpenAI instead, change provider to 'openai' and uncomment below:
       openai = {
-        endpoint = 'https://api.openai.com/v1',
-        model = 'gpt-4o', -- This model exists and is available
-        timeout = 30000,
-        -- API key will be prompted or set via environment variable OPENAI_API_KEY
-        extra_request_body = {
-          temperature = 0,
-          max_tokens = 20480,
-        },
+        model = 'gpt-4o',
       },
     },
-
-    -- WSL2 specific settings
+    ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
+    auto_suggestions_provider = 'openai',
+    provider = 'claude', -- The provider used in Aider mode or in the planning phase of Cursor Planning Mode
+    ---@alias Mode "agentic" | "legacy"
+    mode = 'agentic', -- The default mode for interaction. "agentic" uses tools to automatically generate code, "legacy" uses the old planning method to generate code.
+    -- WARNING: Since auto-suggestions are a high-frequency operation and therefore expensive,
+    -- currently designating it as `copilot` provider is dangerous because: https://github.com/yetone/avante.nvim/issues/1048
+    -- Of course, you can reduce the request frequency by increasing `suggestion.debounce`.
+    --
+    behaviour = {
+      auto_suggestions = false, -- Experimental stage
+      auto_set_highlight_group = true,
+      auto_set_keymaps = true,
+      auto_apply_diff_after_generation = false,
+      support_paste_from_clipboard = false,
+      minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
+      enable_token_counting = true, -- Whether to enable token counting. Default to true.
+      auto_approve_tool_permissions = false, -- Default: show permission prompts for all tools
+      -- Examples:
+      -- auto_approve_tool_permissions = true,                -- Auto-approve all tools (no prompts)
+      -- auto_approve_tool_permissions = {"bash", "replace_in_file"}, -- Auto-approve specific tools only
+    },
+    mappings = {
+      --- @class AvanteConflictMappings
+      diff = {
+        ours = 'co',
+        theirs = 'ct',
+        all_theirs = 'ca',
+        both = 'cb',
+        cursor = 'cc',
+        next = ']x',
+        prev = '[x',
+      },
+      suggestion = {
+        accept = '<M-l>',
+        next = '<M-]>',
+        prev = '<M-[>',
+        dismiss = '<C-]>',
+      },
+      jump = {
+        next = ']]',
+        prev = '[[',
+      },
+      submit = {
+        normal = '<CR>',
+        insert = '<C-s>',
+      },
+      cancel = {
+        normal = { '<C-c>', '<Esc>', 'q' },
+        insert = { '<C-c>' },
+      },
+      sidebar = {
+        apply_all = 'A',
+        apply_cursor = 'a',
+        retry_user_request = 'r',
+        edit_user_request = 'e',
+        switch_windows = '<F24>',
+        reverse_switch_windows = '<S-Tab>',
+        remove_file = 'd',
+        add_file = '@',
+        close = { '<Esc>', 'q' },
+        close_from_input = nil, -- e.g., { normal = "<Esc>", insert = "<C-d>" }
+      },
+    },
+    hints = { enabled = true },
     windows = {
-      width = 30,
-      wrap = true,
+      ---@type "right" | "left" | "top" | "bottom"
+      position = 'right', -- the position of the sidebar
+      wrap = true, -- similar to vim.o.wrap
+      width = 30, -- default % based on available width
+      sidebar_header = {
+        enabled = true, -- true, false to enable/disable the header
+        align = 'center', -- left, center, right for title
+        rounded = true,
+      },
+      input = {
+        prefix = '> ',
+        height = 8, -- Height of the input window in vertical layout
+      },
+      edit = {
+        border = 'rounded',
+        start_insert = true, -- Start insert mode when opening the edit window
+      },
+      ask = {
+        floating = false, -- Open the 'AvanteAsk' prompt in a floating window
+        start_insert = true, -- Start insert mode when opening the ask window
+        border = 'rounded',
+        ---@type "ours" | "theirs"
+        focus_on_apply = 'ours', -- which diff to focus after applying
+      },
     },
-
-    -- Improve file selector for WSL2
-    file_selector = {
-      provider = 'telescope', -- or "fzf", "mini.pick"
+    highlights = {
+      ---@type AvanteConflictHighlights
+      diff = {
+        current = 'DiffText',
+        incoming = 'DiffAdd',
+      },
     },
-
-    -- Input provider (helps with WSL2 compatibility)
-    input = {
-      provider = 'dressing',
+    --- @class AvanteConflictUserConfig
+    diff = {
+      autojump = true,
+      ---@type string | fun(): any
+      list_opener = 'copen',
+      --- Override the 'timeoutlen' setting while hovering over a diff (see :help timeoutlen).
+      --- Helps to avoid entering operator-pending mode with diff mappings starting with `c`.
+      --- Disable by setting to -1.
+      override_timeoutlen = 500,
+    },
+    suggestion = {
+      debounce = 300,
+      throttle = 1000,
     },
   },
 

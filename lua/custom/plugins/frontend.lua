@@ -1,15 +1,5 @@
 -- Frontend development tools (CSS, Tailwind, React, etc.)
 return {
-  -- Tailwind CSS Colorizer - Shows colors inline for Tailwind classes
-  {
-    'roobert/tailwindcss-colorizer-cmp.nvim',
-    config = function()
-      require('tailwindcss-colorizer-cmp').setup {
-        color_square_width = 2,
-      }
-    end,
-  },
-
   -- CSS Colorizer - Shows actual colors for hex, rgb, etc.
   {
     'norcalli/nvim-colorizer.lua',
@@ -82,3 +72,4 @@ return {
     ft = { 'html', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'vue', 'xml' },
   },
 }
+

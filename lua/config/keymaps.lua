@@ -7,6 +7,9 @@ vim.keymap.set('n', '<leader>tf', ':ToggleFormatOnSave<CR>', { desc = '[T]oggle 
 -- Toggle copilot keymap
 vim.keymap.set('n', '<leader>tc', ':ToggleCopilot<CR>', { desc = '[T]oggle [C]opilot' })
 
+-- Toggle spell check keymap
+vim.keymap.set('n', '<leader>ts', ':ToggleSpelling<CR>', { desc = '[T]oggle [S]pelling' })
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -54,4 +57,3 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Jump half of the window up, an
 
 -- Keybind for nvim oil openning
 vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
-

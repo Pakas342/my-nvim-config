@@ -1,31 +1,8 @@
 -- Frontend development tools (CSS, Tailwind, React, etc.)
 return {
-  -- CSS Colorizer - Shows actual colors for hex, rgb, etc.
   {
-    'norcalli/nvim-colorizer.lua',
-    config = function()
-      require('colorizer').setup({
-        'css',
-        'javascript',
-        'typescript',
-        'javascriptreact',
-        'typescriptreact',
-        'html',
-        'vue',
-        'svelte',
-      }, {
-        RGB = true, -- #RGB hex codes
-        RRGGBB = true, -- #RRGGBB hex codes
-        names = true, -- "Name" codes like Blue
-        RRGGBBAA = true, -- #RRGGBBAA hex codes
-        rgb_fn = true, -- CSS rgb() and rgba() functions
-        hsl_fn = true, -- CSS hsl() and hsla() functions
-        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-      })
-    end,
+    'brenoprata10/nvim-highlight-colors',
   },
-
   --  Better Tailwind IntelliSense with sorting and formatting
   {
     'luckasRanarison/tailwind-tools.nvim',
@@ -72,4 +49,3 @@ return {
     ft = { 'html', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'vue', 'xml' },
   },
 }
-

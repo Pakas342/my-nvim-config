@@ -14,7 +14,7 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
 -- NOTE: this is done for the toggle auto-save
-vim.g.format_on_save = true
+vim.g.format_on_save_enabled = true
 vim.api.nvim_create_user_command('ToggleFormatOnSave', function()
   vim.g.format_on_save_enabled = not vim.g.format_on_save_enabled
   print('Format on save: ' .. (vim.g.format_on_save_enabled and 'enabled' or 'disabled'))
@@ -30,6 +30,14 @@ vim.api.nvim_create_user_command('ToggleCopilot', function()
     vim.cmd 'Copilot disable'
   end
   print('Copilot autocompletion: ' .. (vim.g.copilot_enable and 'enabled' or 'disabled'))
+end, {})
+
+-- NOTE: This is done to toggle the spelling checker
+vim.opt.spell = false
+vim.opt.spelllang = { 'en' }
+vim.api.nvim_create_user_command('ToggleSpelling', function()
+  vim.opt.spell = not vim.o.spell
+  print('Spell checking: ' .. (vim.o.spell and 'enabled' or 'disabled'))
 end, {})
 
 vim.opt.fileformat = 'unix'
@@ -93,7 +101,3 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
-
--- Spell checking
-vim.opt.spell = true
-vim.opt.spelllang = { 'en' }

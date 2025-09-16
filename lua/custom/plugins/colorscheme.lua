@@ -12,7 +12,7 @@ return {
             name = 'Tokyo Night',
             colorscheme = 'tokyonight',
             before = [[
-            require('tokyonight').setup({ style = 'night' })
+            require('tokyonight').setup({ style = 'night', transparent = true })
           ]],
           },
           {
@@ -26,14 +26,23 @@ return {
           {
             name = 'Everforest',
             colorscheme = 'everforest',
+            before = [[
+            vim.g.everforest_transparent_background = 2
+            ]],
           },
           {
             name = 'Rose Pine',
             colorscheme = 'rose-pine-main',
+            before = [[
+            require('rose-pine').setup({disable_background = true})
+          ]],
           },
           {
             name = 'Rose Pine moon',
             colorscheme = 'rose-pine-moon',
+            before = [[
+            require('rose-pine').setup({disable_background = true })
+          ]],
           },
         },
       }

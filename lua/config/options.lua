@@ -13,25 +13,6 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
--- NOTE: this is done for the toggle auto-save
-vim.g.format_on_save_enabled = true
-vim.api.nvim_create_user_command('ToggleFormatOnSave', function()
-  vim.g.format_on_save_enabled = not vim.g.format_on_save_enabled
-  print('Format on save: ' .. (vim.g.format_on_save_enabled and 'enabled' or 'disabled'))
-end, {})
-
--- NOTE: this is done for the toggle copilot
-vim.g.copilot_enable = false
-vim.api.nvim_create_user_command('ToggleCopilot', function()
-  vim.g.copilot_enable = not vim.g.copilot_enable
-  if vim.g.copilot_enable then
-    vim.cmd 'Copilot enable'
-  else
-    vim.cmd 'Copilot disable'
-  end
-  print('Copilot autocompletion: ' .. (vim.g.copilot_enable and 'enabled' or 'disabled'))
-end, {})
-
 -- NOTE: This is done to toggle the spelling checker
 vim.opt.spell = false
 vim.opt.spelllang = { 'en' }

@@ -2,11 +2,13 @@
 return {
   {
     'brenoprata10/nvim-highlight-colors',
+    event = 'VeryLazy',
   },
   --  Better Tailwind IntelliSense with sorting and formatting
   {
     'luckasRanarison/tailwind-tools.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    event = 'VeryLazy',
     opts = {
       document_color = {
         enabled = true, -- can be toggled by commands
@@ -30,12 +32,13 @@ return {
   {
     'windwp/nvim-ts-autotag',
     dependencies = 'nvim-treesitter/nvim-treesitter',
+    event = 'VeryLazy',
     config = function()
       require('nvim-ts-autotag').setup {
         opts = {
           -- Defaults
-          enable_close = true, -- Auto close tags
-          enable_rename = true, -- Auto rename pairs of tags
+          enable_close = true,           -- Auto close tags
+          enable_rename = true,          -- Auto rename pairs of tags
           enable_close_on_slash = false, -- Auto close on trailing </
         },
         -- Also override individual filetype configs

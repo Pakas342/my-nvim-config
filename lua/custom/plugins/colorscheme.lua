@@ -5,6 +5,7 @@ return {
     'zaldih/themery.nvim',
     lazy = false,
     dependencies = { 'folke/tokyonight.nvim', 'rebelot/kanagawa.nvim', 'sainnhe/everforest', 'rose-pine/neovim' },
+    event = 'VeryLazy',
     config = function()
       require('themery').setup {
         themes = {

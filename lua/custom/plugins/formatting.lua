@@ -55,7 +55,8 @@ return {
         yaml = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
-    config = function()
+    config = function(_, opts)
+      require('conform').setup(opts)
       -- NOTE: this is done for the toggle auto-save
       vim.g.format_on_save_enabled = true
       vim.api.nvim_create_user_command('ToggleFormatOnSave', function()

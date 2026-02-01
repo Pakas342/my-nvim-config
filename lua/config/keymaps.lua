@@ -57,3 +57,6 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Jump half of the window up, an
 
 -- Keybind for nvim oil openning
 vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+
+-- Keybind for openning a notes file with my note reader
+vim.keymap.set('n', 'gn', ':silent !xournalpp <cfile> > /dev/null 2>&1 &<CR>', { desc = '[G]oto [N]otes', silent = true })

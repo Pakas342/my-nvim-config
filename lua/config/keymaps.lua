@@ -10,6 +10,20 @@ vim.keymap.set('n', '<leader>tc', ':ToggleCopilot<CR>', { desc = '[T]oggle [C]op
 -- Toggle spell check keymap
 vim.keymap.set('n', '<leader>ts', ':ToggleSpelling<CR>', { desc = '[T]oggle [S]pelling' })
 
+-- Toggle LSP for current buffer
+vim.api.nvim_create_user_command('ToggleLSP', function()
+  local clients = vim.lsp.get_clients { bufnr = 0 }
+  if #clients > 0 then
+    vim.lsp.stop_client(clients)
+    vim.notify('LSP disabled', vim.log.levels.INFO)
+  else
+    vim.cmd 'LspStart'
+    vim.notify('LSP enabled', vim.log.levels.INFO)
+  end
+end, {})
+
+vim.keymap.set('n', '<leader>tl', ':ToggleLSP<CR>', { desc = '[T]oggle [L]SP' })
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')

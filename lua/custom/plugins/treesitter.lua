@@ -21,6 +21,7 @@ return {
         'python',
         'javascript',
         'typescript',
+        'latex',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
@@ -41,3 +42,4 @@ return {
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   },
 }
+

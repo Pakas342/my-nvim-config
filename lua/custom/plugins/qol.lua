@@ -159,6 +159,7 @@ return {
   -- Markdown reader
   {
     'MeanderingProgrammer/render-markdown.nvim',
+    enabled = false,
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig

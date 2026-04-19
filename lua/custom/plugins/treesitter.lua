@@ -56,8 +56,9 @@ return {
           end
 
           -- Folding (optional — uncomment if you want it)
-          -- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-          -- vim.wo.foldmethod = 'expr'
+          vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+          vim.wo.foldmethod = 'expr'
+          vim.wo.foldlevel = 99
         end,
       })
 

@@ -28,7 +28,7 @@ return {
       require('nvim-treesitter').install(ensure_installed)
 
       -- Filetypes we don't want treesitter-based indent for.
-      local indent_disable = { ruby = true, c = true, cpp = true }
+      local indent_disable = { ruby = true }
       -- Filetypes that still need vim's regex highlighting alongside treesitter.
       local regex_hl_extra = { ruby = true }
 

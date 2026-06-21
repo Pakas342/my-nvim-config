@@ -188,7 +188,7 @@ return {
         tailwindcss = {},
         astro = {},
         bashls = {},
-        angularls = { filetypes = { 'typescript', 'htmlangular' } },
+        angularls = { filetypes = { 'typescript', 'htmlangular', 'html' } },
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
